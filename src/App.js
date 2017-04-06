@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import emojis from './emojis.js';
-import './App.css';
 
 const emojiKeys = Object.keys(emojis);
 
@@ -9,13 +8,14 @@ function rando(arr) {
 }
 
 function convertToEmojis(text) {
-  const words = text.replace(/[^0-9a-z\s]/gi, '').split(' ');
-  const letters = words.map(word => word.substring(0, 1));
+  const words = text.split(' ').join('').replace(/[^0-9a-z]/gi, '');
+  // const letters = words.map(word => word.substring(0, 1));
+  const letters = words.split('');
   return letters.map(letter => {
 
     if (parseInt(letter, 10)) {
       const key = emojiKeys[0];
-      return `<span title="${key}">${emojis[key]}</span>`;
+      return `<div data-letter="${letter}" class="emoji" title="${key}">${emojis[key]}</div>`;
     }
 
     const keys = emojiKeys.filter(key => key.startsWith(letter.toLowerCase()));
@@ -23,7 +23,7 @@ function convertToEmojis(text) {
 
     if (key === undefined) console.log(letter);
 
-    return `<span title="${key}">${emojis[key]}</span>`;
+    return `<div data-letter="${letter}" class="emoji" title="${key}">${emojis[key]}</div>`;
   }).join('');
 }
 
@@ -33,7 +33,12 @@ export default class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  state = { text: '', emojis: '' }
+  state = { text: '', emojis: '', width: 1 }
+
+  componentDidMount() {
+    const width = document.querySelector('.wrapper').clientWidth;
+    this.setState({ width });
+  }
 
   handleChange(e) {
     const { value: text } = e.target;
@@ -41,14 +46,14 @@ export default class App extends Component {
   }
 
   render() {
-    const { emojis, text } = this.state;
+    const { emojis, text, width } = this.state;
+    const { h, w } = { w: 19.75, h: 27.5 };
+    const height = `${(width * h) / w}px`;
+
     return (
       <div className="app">
-        <aside>
-          <textarea onChange={this.handleChange} value={text} />
-        </aside>
-
-        <aside dangerouslySetInnerHTML={{ __html: emojis }} />
+        <textarea autoFocus onChange={this.handleChange} value={text} />
+        <aside className="wrapper" ref={(r) => { this.wrapper = r; }} style={{ height }} dangerouslySetInnerHTML={{ __html: emojis }} />
       </div>
     )
   }
