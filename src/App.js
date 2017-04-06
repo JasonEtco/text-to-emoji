@@ -8,8 +8,7 @@ function rando(arr) {
 }
 
 function convertToEmojis(text) {
-  const words = text.split(' ').join('').replace(/[^0-9a-z]/gi, '');
-  // const letters = words.map(word => word.substring(0, 1));
+  const words = text.split(' ').join('').replace(/[^a-z]/gi, '');
   const letters = words.split('');
   return letters.map(letter => {
 
