@@ -133,7 +133,6 @@ export default {
   "ring": "💍",
   "closed umbrella": "🌂",
   "dog": "🐶",
-  "cat": "🐱",
   "mouse": "🐭",
   "hamster": "🐹",
   "rabbit": "🐰",
