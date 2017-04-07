@@ -2,7 +2,7 @@
   "name": "text-to-emoji",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jasonetco.github.io/text-to-emoji",
+  "homepage": "https://emojis.jasonet.co",
   "dependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
