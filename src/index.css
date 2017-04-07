@@ -23,6 +23,7 @@ textarea {
 .wrapper {
   display: flex;
   box-sizing: border-box;
+  align-content: flex-start;
   flex-wrap: wrap;
   padding: 2em;
   border: 3px solid black;
