@@ -14,7 +14,7 @@ function convertToEmojis(text) {
 
     if (parseInt(letter, 10)) {
       const key = emojiKeys[0];
-      return `<div data-letter="${letter}" class="emoji" title="${key}">${emojis[key]}</div>`;
+      return <div data-letter={letter} className="emoji" title={key}>{emojis[key]}</div>;
     }
 
     const keys = emojiKeys.filter(key => key.startsWith(letter.toLowerCase()));
@@ -22,8 +22,8 @@ function convertToEmojis(text) {
 
     if (key === undefined) console.log(letter);
 
-    return `<div data-letter="${letter}" class="emoji" title="${key}">${emojis[key]}</div>`;
-  }).join('');
+    return <div data-letter={letter} className="emoji" title={key}>{emojis[key]}</div>;
+  });
 }
 
 export default class App extends Component {
@@ -32,7 +32,7 @@ export default class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  state = { text: '', emojis: '', width: 1 }
+  state = { text: '', width: 1 }
 
   componentDidMount() {
     const width = document.querySelector('.wrapper').clientWidth;
@@ -41,18 +41,18 @@ export default class App extends Component {
 
   handleChange(e) {
     const { value: text } = e.target;
-    this.setState({ emojis: convertToEmojis(text), text });
+    this.setState({ text });
   }
 
   render() {
-    const { emojis, text, width } = this.state;
+    const { text, width } = this.state;
     const { h, w } = { w: 19.75, h: 27.5 };
     const height = `${(width * h) / w}px`;
-
+    const emojis = convertToEmojis(text);
     return (
       <div className="app">
         <textarea autoFocus onChange={this.handleChange} value={text} />
-        <aside className="wrapper" ref={(r) => { this.wrapper = r; }} style={{ height }} dangerouslySetInnerHTML={{ __html: emojis }} />
+        <aside className="wrapper" ref={(r) => { this.wrapper = r; }} style={{ height }}>{emojis}</aside>
       </div>
     )
   }
